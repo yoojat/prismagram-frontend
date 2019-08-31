@@ -79,7 +79,6 @@ export default ({
           <Button text={"Confirm"} />
         </form>
       )}
-      )}
     </Form>
     {action !== "confirm" && (
       <StateChanger>
