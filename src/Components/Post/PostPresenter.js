@@ -4,7 +4,7 @@ import TextareaAutosize from "react-autosize-textarea";
 
 import FatText from "../FatText";
 import Avatar from "../Avatar";
-import { HeartFull, HeartEmpty, Comment } from "../Icons";
+import { HeartFull, HeartEmpty, Comment as CommentIcon } from "../Icons";
 
 const Post = styled.div`
   ${props => props.theme.whiteBox};
@@ -44,7 +44,7 @@ const File = styled.div`
   height: 600px;
   position: absolute;
   top: 0;
-  background-image: url(${props => props.src}});
+  background-image: url(${props => props.src});
   background-size: cover;
   background-position: center;
   opacity: ${props => (props.showing ? 1 : 0)};
@@ -89,6 +89,17 @@ const Textarea = styled(TextareaAutosize)`
   }
 `;
 
+const Comments = styled.ul`
+  margin-top: 10px;
+`;
+
+const Comment = styled.li`
+  margin-bottom: 7px;
+  span {
+    margin-right: 5px;
+  }
+`;
+
 export default ({
   user: { username, avatar },
   location,
@@ -98,7 +109,9 @@ export default ({
   createdAt,
   newComment,
   currentItem,
-  toggleLike
+  toggleLike,
+  onKeyPress,
+  comments
 }) => (
   <Post>
     <Header>
@@ -120,12 +133,27 @@ export default ({
           {isLiked ? <HeartFull /> : <HeartEmpty />}
         </Button>{" "}
         <Button>
-          <Comment />
+          <CommentIcon />
         </Button>
       </Buttons>
       <FatText text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
+      {comments && (
+        <Comments>
+          {comments.map(comment => (
+            <Comment key={comment.id}>
+              <FatText text={comment.user.username} />
+              {comment.text}
+            </Comment>
+          ))}
+        </Comments>
+      )}
       <Timestamp>{createdAt}</Timestamp>
-      <Textarea placeholder={"Add a comment..."} {...newComment} />
+      <Textarea
+        placeholder={"Add a comment..."}
+        value={newComment.value}
+        onChange={newComment.onChange}
+        onKeyUp={onKeyPress}
+      />{" "}
     </Meta>
   </Post>
 );

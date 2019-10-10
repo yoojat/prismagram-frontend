@@ -50,6 +50,17 @@ const PostContainer = ({
       setLikeCount(likeCountS + 1);
     }
   };
+
+  const onKeyPress = e => {
+    const { keyCode } = e;
+    if (keyCode === 13) {
+      //enter
+      comment.setValue("");
+      // addCommentMutation();
+    }
+    return;
+  };
+
   return (
     <PostPresenter
       key={id}
@@ -67,6 +78,7 @@ const PostContainer = ({
       setLikeCount={setLikeCount}
       currentItem={currentItem}
       toggleLike={toggleLike}
+      onKeyPress={onKeyPress}
     />
   );
 };
