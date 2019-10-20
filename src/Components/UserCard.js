@@ -29,7 +29,13 @@ const UserCard = ({ id, username, isFollowing, url, isSelf }) => (
     <ELink to={`/${username}`}>
       <FatText text={username} />
     </ELink>
-    {!isSelf && <FollowButton text={isFollowing ? "Unfollow" : "Follow"} />}
+    {!isSelf && (
+      <FollowButton
+        id={id}
+        isFollowing={isFollowing}
+        text={isFollowing ? "Unfollow" : "Follow"}
+      />
+    )}
   </Card>
 );
 
